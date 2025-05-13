@@ -27,6 +27,22 @@ namespace UserandDocumentManagement_JKT.Sevices.Implementations
                             .ToListAsync();
         }
 
+        public async Task<UsersProfile> GetUsersByUserIdAsync(Guid userId)
+        {
+              var user = await _context.Users.Where(a => a.Id == userId && a.Role != "Admin")
+                      .Select(u => new UsersProfile
+                      {
+                          Id = u.Id,
+                          Username = u.Username,
+                          Role = u.Role,
+                          Email=u.Email
+                      }).FirstOrDefaultAsync();
+
+            if (user == null)
+                throw new KeyNotFoundException("User not found.");
+            return user;
+        }
+
         public async Task<string> UpdateUserRoleByIdAsync(Guid userId, string newRole)
         {
             var user = await _context.Users.FindAsync(userId);

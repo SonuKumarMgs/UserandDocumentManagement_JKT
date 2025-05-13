@@ -17,10 +17,13 @@ namespace UserandDocumentManagement_JKT.Controllers
     {
         private readonly AppDbCotext _context;        
         private readonly IDocumentService _documentService;
-        public DocumentManagementController(AppDbCotext appDbCotext, IDocumentService documentService)
+        private readonly IIngestionService _ingestionService;
+        public DocumentManagementController(AppDbCotext appDbCotext, IDocumentService documentService,
+            IIngestionService ingestionService)
         {
-            _context = appDbCotext;            
+            _context = appDbCotext;
             _documentService = documentService;
+            _ingestionService = ingestionService;
         }
 
         [HttpPost("upload")]
@@ -30,6 +33,12 @@ namespace UserandDocumentManagement_JKT.Controllers
             if (string.IsNullOrEmpty(userId)) return Unauthorized("User ID missing in token.");
 
             var doc = await _documentService.UploadDocumentAsync(file, Guid.Parse(userId));
+
+            var ingestionResult = await _ingestionService.TriggerIngestionAsync(doc.Id);
+
+            if (!ingestionResult)
+                return StatusCode(500, "Document uploaded, but ingestion trigger failed.");
+
             return Ok(new { doc.Id, doc.FileName, doc.OwnerId });
         }
         [HttpGet("DownloadDocument/{id}")]
@@ -59,8 +68,8 @@ namespace UserandDocumentManagement_JKT.Controllers
                 FileName = doc.FileName,
                 FilePath = doc.FilePath,
                 UploadedAt = doc.UploadedAt,
-                OwnerId = doc.OwnerId  
-                ///comment
+                OwnerId = doc.OwnerId 
+                
             };
 
             return Ok(dto);

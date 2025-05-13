@@ -36,5 +36,12 @@ namespace UserandDocumentManagement_JKT.Controllers
             var data = await _userService.UpdateUserRoleByIdAsync(userId, newRole);
             return Ok(data);
         }
+
+        [HttpGet("GetUsersByUserId/{userId}")]
+        public async Task<ActionResult<UsersProfile>> GetUsersByUserIdAsync([FromRoute] Guid userId)
+        {
+            var data = await _userService.GetUsersByUserIdAsync(userId);
+            return Ok(data);
+        }
     }
 }
