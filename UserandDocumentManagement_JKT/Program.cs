@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.Text;
 using UserandDocumentManagement_JKT.CustomMiddileWare;
 using UserandDocumentManagement_JKT.Data;
@@ -19,6 +20,21 @@ builder.Services.AddDbContext<AppDbCotext>(options =>
 builder.Services.AddTransient<ISignupService, SignupServiceImpl>();
 builder.Services.AddTransient<IUserService, UserServiceImpl>();
 builder.Services.AddTransient<IDocumentService, DocumentServiceImpl>();
+
+
+Log.Logger = new LoggerConfiguration()    
+    .MinimumLevel.Information()
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File(
+      path: "Logs/log.txt",
+      rollingInterval: RollingInterval.Day,
+      outputTemplate:"[{Timestamp:yyyy-MM-dd HH:mm:ss}{Level:u3}{Message:lj}{NewLine}{Exception}]",
+      shared:true
+    )    
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
@@ -42,7 +58,7 @@ app.UseRouting();
 app.UseMiddleware<GlobalResponseMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseSerilogRequestLogging();
 app.MapControllers();
 
 app.Run();
