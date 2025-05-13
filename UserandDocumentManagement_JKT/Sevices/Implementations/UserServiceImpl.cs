@@ -29,7 +29,7 @@ namespace UserandDocumentManagement_JKT.Sevices.Implementations
 
         public async Task<UsersProfile> GetUsersByUserIdAsync(Guid userId)
         {
-              var user = await _context.Users.Where(a => a.Id == userId && a.Role != "Admin")
+              var user = await _context.Users.Where(a => a.Id == userId && a.Role != "admin")
                       .Select(u => new UsersProfile
                       {
                           Id = u.Id,

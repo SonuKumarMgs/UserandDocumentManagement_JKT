@@ -9,7 +9,6 @@ namespace UserandDocumentManagement_JKT.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<UploadDocument> UploadDocuments { get; set; }
-        public DbSet<IngestionStatus> IngestionStatuses { get; set; }
-        public DbSet<UsersProfile> UsersProfiles { get; set; }
+        public DbSet<IngestionStatus> IngestionStatuses { get; set; }       
     }
 }

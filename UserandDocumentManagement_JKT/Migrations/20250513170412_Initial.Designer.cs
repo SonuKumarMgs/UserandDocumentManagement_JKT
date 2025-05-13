@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UserandDocumentManagement_JKT.Data;
@@ -11,9 +12,11 @@ using UserandDocumentManagement_JKT.Data;
 namespace UserandDocumentManagement_JKT.Migrations
 {
     [DbContext(typeof(AppDbCotext))]
-    partial class AppDbCotextModelSnapshot : ModelSnapshot
+    [Migration("20250513170412_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

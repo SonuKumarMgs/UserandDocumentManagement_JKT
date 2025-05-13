@@ -11,7 +11,7 @@ namespace UserandDocumentManagement_JKT.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "admin")]
     public class UserManagementController : ControllerBase
     {
         private readonly IUserService _userService;

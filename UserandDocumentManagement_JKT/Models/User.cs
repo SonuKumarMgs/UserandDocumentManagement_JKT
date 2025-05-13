@@ -8,7 +8,7 @@ namespace UserandDocumentManagement_JKT.Models
         public string? Username { get; set; }
         public string? Email { get; set; }
         public string? Password { get; set; }
-        public string? Role { get; set; } = "Viewer"; // Admin, Editor, Viewer
+        public string? Role { get; set; } = "viewer"; // Admin, Editor, Viewer
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public ICollection<UploadDocument> UploadDocuments { get; set; }
