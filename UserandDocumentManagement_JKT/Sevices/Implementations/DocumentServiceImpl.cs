@@ -18,57 +18,6 @@ namespace UserandDocumentManagement_JKT.Sevices.Implementations
             _env = env;
         }
 
-        public async Task<bool> DeleteDocumentAsync(Guid documentId)
-        {
-            var document = await _context.UploadDocuments.FindAsync(documentId);
-            if (document == null)
-                return false;
-
-            var fullPath = Path.Combine(_env.ContentRootPath, document.FilePath);
-            if (File.Exists(fullPath))
-                File.Delete(fullPath);
-
-            _context.UploadDocuments.Remove(document);
-            await _context.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<FileStreamResult> DownloadDocumentAsync(Guid documentId)
-        {
-            var document = await _context.UploadDocuments.FindAsync(documentId);
-            if (document == null)
-                throw new FileNotFoundException("Document not found.");
-
-            var fullPath = Path.Combine(_env.ContentRootPath, document.FilePath);
-            if (!File.Exists(fullPath))
-                throw new FileNotFoundException("File not found on disk.");
-
-            var stream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
-            var contentType = "application/octet-stream";
-
-            return new FileStreamResult(stream, contentType)
-            {
-                FileDownloadName = document.FileName
-            };
-        }
-
-        public async Task<List<UploadDocument>> GetAllDocumentsByUserIdAsync(Guid userId)
-        {
-            return await _context.UploadDocuments
-         .Where(d => d.OwnerId == userId)
-         .ToListAsync();
-        }
-
-        public async Task<UploadDocument> GetSingleDocumentsByUserIdAsync(Guid userId)
-        {
-            var user=await _context.Users.FindAsync(userId);
-            if (user == null)
-            {
-                throw new KeyNotFoundException("User not found.");
-            }
-            UploadDocument data =  await _context.UploadDocuments.Where(d => d.OwnerId == userId).SingleOrDefaultAsync();
-            return data;
-        }
 
         public async Task<UploadDocument> UploadDocumentAsync(IFormFile file, Guid ownerId)
         {
@@ -99,6 +48,54 @@ namespace UserandDocumentManagement_JKT.Sevices.Implementations
             await _context.SaveChangesAsync();
 
             return document;
+        }
+        public async Task<FileStreamResult> DownloadDocumentAsync(Guid documentId)
+        {
+            var document = await _context.UploadDocuments.FindAsync(documentId);
+            if (document == null)
+                throw new FileNotFoundException("Document not found.");
+
+            var fullPath = Path.Combine(_env.ContentRootPath, document.FilePath);
+            if (!File.Exists(fullPath))
+                throw new FileNotFoundException("File not found on disk.");
+
+            var stream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
+            var contentType = "application/octet-stream";
+
+            return new FileStreamResult(stream, contentType)
+            {
+                FileDownloadName = document.FileName
+            };
+        }
+        public async Task<List<UploadDocument>> GetAllDocumentsByUserIdAsync(Guid userId)
+        {
+            return await _context.UploadDocuments
+         .Where(d => d.OwnerId == userId)
+         .ToListAsync();
+        }
+        public async Task<UploadDocument> GetSingleDocumentsByUserIdAsync(Guid userId)
+        {
+            var user=await _context.Users.FindAsync(userId);
+            if (user == null)
+            {
+                throw new KeyNotFoundException("User not found.");
+            }
+            UploadDocument data =  await _context.UploadDocuments.Where(d => d.OwnerId == userId).SingleOrDefaultAsync();
+            return data;
+        }        
+        public async Task<bool> DeleteDocumentAsync(Guid documentId)
+        {
+            var document = await _context.UploadDocuments.FindAsync(documentId);
+            if (document == null)
+                return false;
+
+            var fullPath = Path.Combine(_env.ContentRootPath, document.FilePath);
+            if (File.Exists(fullPath))
+                File.Delete(fullPath);
+
+            _context.UploadDocuments.Remove(document);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }
