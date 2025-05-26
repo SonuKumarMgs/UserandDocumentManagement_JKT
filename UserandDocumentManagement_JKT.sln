@@ -5,6 +5,10 @@ VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserandDocumentManagement_JKT", "UserandDocumentManagement_JKT\UserandDocumentManagement_JKT.csproj", "{D4C0828B-BD08-4DB2-ACC5-749506A758BE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnit_Testing", "NUnit_Testing\NUnit_Testing.csproj", "{25B25B35-E901-455E-9951-7B1EE063C178}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{D4C0828B-BD08-4DB2-ACC5-749506A758BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4C0828B-BD08-4DB2-ACC5-749506A758BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4C0828B-BD08-4DB2-ACC5-749506A758BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25B25B35-E901-455E-9951-7B1EE063C178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25B25B35-E901-455E-9951-7B1EE063C178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25B25B35-E901-455E-9951-7B1EE063C178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25B25B35-E901-455E-9951-7B1EE063C178}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{25B25B35-E901-455E-9951-7B1EE063C178} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {789F1D96-9A0F-4D09-80DC-886FD5692C23}
