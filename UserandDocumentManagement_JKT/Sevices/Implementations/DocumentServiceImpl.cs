@@ -49,23 +49,12 @@ namespace UserandDocumentManagement_JKT.Sevices.Implementations
 
             return document;
         }
-        public async Task<FileStreamResult> DownloadDocumentAsync(Guid documentId)
+        public async Task<UploadDocument> DownloadDocumentAsync(Guid documentId)
         {
             var document = await _context.UploadDocuments.FindAsync(documentId);
             if (document == null)
                 throw new FileNotFoundException("Document not found.");
-
-            var fullPath = Path.Combine(_env.ContentRootPath, document.FilePath);
-            if (!File.Exists(fullPath))
-                throw new FileNotFoundException("File not found on disk.");
-
-            var stream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
-            var contentType = "application/octet-stream";
-
-            return new FileStreamResult(stream, contentType)
-            {
-                FileDownloadName = document.FileName
-            };
+            return document;           
         }
         public async Task<List<UploadDocument>> GetAllDocumentsByUserIdAsync(Guid userId)
         {

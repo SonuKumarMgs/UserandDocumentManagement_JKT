@@ -12,7 +12,7 @@ namespace UserandDocumentManagement_JKT.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "admin")]
     public class DocumentManagementController : ControllerBase
     {
         private readonly AppDbCotext _context;        
@@ -44,8 +44,8 @@ namespace UserandDocumentManagement_JKT.Controllers
         [HttpGet("DownloadDocument/{id}")]
         public async Task<IActionResult> DownloadDocument(Guid id)
         {
-            var file = await _documentService.DownloadDocumentAsync(id);
-            return file;
+            var document = await _documentService.DownloadDocumentAsync(id);
+            return Ok(new { document }); ;
         }
 
         [HttpDelete("DeleteDocument/{id}")]

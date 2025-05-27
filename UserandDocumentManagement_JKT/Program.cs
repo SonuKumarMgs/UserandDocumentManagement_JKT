@@ -20,6 +20,7 @@ builder.Services.AddDbContext<AppDbCotext>(options =>
 builder.Services.AddTransient<ISignupService, SignupServiceImpl>();
 builder.Services.AddTransient<IUserService, UserServiceImpl>();
 builder.Services.AddTransient<IDocumentService, DocumentServiceImpl>();
+builder.Services.AddHttpClient<IIngestionService, IngestionServiceImpl>();
 
 
 Log.Logger = new LoggerConfiguration()    
